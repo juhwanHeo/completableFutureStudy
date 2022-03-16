@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 public class CoffeeRepository {
-    private Map<String, Coffee> coffeeMap = new HashMap<>();
+    private final Map<String, Coffee> coffeeMap = new HashMap<>();
 
     @PostConstruct
     public void init() {
