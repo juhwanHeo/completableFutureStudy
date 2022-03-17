@@ -1,11 +1,10 @@
 package com.async.service.impl;
 
-import com.async.repository.CoffeeRepository;
+import com.async.repository.impl.CoffeeRepositoryImpl;
 import com.async.service.AsyncService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.CompletableFuture;
@@ -17,14 +16,14 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 public class AsyncServiceImpl implements AsyncService {
 
-    private CoffeeRepository coffeeRepository;
+    private CoffeeRepositoryImpl coffeeRepository;
 
     Executor executor = Executors.newFixedThreadPool(10);
 
 //    public ThreadPoolTaskExecutor executor;
 
     @Autowired
-    public AsyncServiceImpl(CoffeeRepository coffeeRepository) {
+    public AsyncServiceImpl(CoffeeRepositoryImpl coffeeRepository) {
         this.coffeeRepository = coffeeRepository;
     }
 

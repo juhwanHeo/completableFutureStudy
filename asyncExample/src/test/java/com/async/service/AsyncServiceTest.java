@@ -1,14 +1,11 @@
 package com.async.service;
 
 
-import com.async.repository.CoffeeRepository;
 import com.async.service.impl.AsyncServiceImpl;
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,14 +17,16 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@SpringBootTest
-@ContextConfiguration(classes = {
-        CoffeeRepository.class
-        , AsyncServiceImpl.class
-})
+import static org.junit.jupiter.api.Assertions.*;
+
 /*
-* https://brunch.co.kr/@springboot/267 참고
-* */
+ * https://brunch.co.kr/@springboot/267 참고
+ * */
+@SpringBootTest
+//@ContextConfiguration(classes = {
+//        CoffeeRepository.class
+//        AsyncServiceImpl.class
+//})
 @DisplayName("-- AsyncServiceTest 테스트 -- ")
 public class AsyncServiceTest {
 
@@ -172,7 +171,6 @@ public class AsyncServiceTest {
                         .mapToInt(Integer::intValue)
                         .sum())
                 .join();
-
 
         assertEquals(expectedPrice, resultPrice);
     }

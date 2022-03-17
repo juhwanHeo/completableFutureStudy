@@ -1,0 +1,5 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://mongo:mongo123@localhost:9017
+      database: test
