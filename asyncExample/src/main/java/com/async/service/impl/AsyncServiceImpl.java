@@ -1,6 +1,7 @@
 package com.async.service.impl;
 
-import com.async.repository.impl.CoffeeRepositoryImpl;
+import com.async.domain.Coffee;
+import com.async.repository.CoffeeRepository;
 import com.async.service.AsyncService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,14 +17,14 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 public class AsyncServiceImpl implements AsyncService {
 
-    private CoffeeRepositoryImpl coffeeRepository;
+    private CoffeeRepository coffeeRepository;
 
     Executor executor = Executors.newFixedThreadPool(10);
 
 //    public ThreadPoolTaskExecutor executor;
 
     @Autowired
-    public AsyncServiceImpl(CoffeeRepositoryImpl coffeeRepository) {
+    public AsyncServiceImpl(CoffeeRepository coffeeRepository) {
         this.coffeeRepository = coffeeRepository;
     }
 
@@ -58,5 +59,32 @@ public class AsyncServiceImpl implements AsyncService {
             log.info("supplyAsync");
             return (int) (price * 0.9);
         }, executor);
+    }
+
+    @Override
+    public Coffee findByName(String name) {
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return coffeeRepository.findByName(name)
+                .orElseGet(Coffee.builder()::build);
+    }
+
+    @Override
+    public Coffee discount(Coffee coffee, int percent) {
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        int price = coffee.getPrice();
+        price -= price * percent / 100;
+        coffee.setPrice(price);
+
+        return coffee;
     }
 }

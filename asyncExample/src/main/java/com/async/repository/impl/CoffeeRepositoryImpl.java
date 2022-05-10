@@ -1,18 +1,12 @@
 package com.async.repository.impl;
 
 import com.async.domain.Coffee;
-import com.async.repository.CoffeeRepository;
 import com.async.repository.CustomizedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
-
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.data.mongodb.core.query.Update;
 
 //@Repository
 public class CoffeeRepositoryImpl implements CustomizedRepository {
@@ -39,6 +33,15 @@ public class CoffeeRepositoryImpl implements CustomizedRepository {
 
         Coffee coffee = mongoTemplate.findOne(Query.query(Criteria.where("name").is(name)), Coffee.class);
         return coffee != null ? coffee.getPrice() : -1;
+    }
+
+    @Override
+    public void updatePriceByName(String name, int updatePrice) {
+        Query query = Query.query(Criteria.where("name").is(name));
+
+        Update update = Update.update("price", updatePrice);
+
+        mongoTemplate.updateFirst(query, update, Coffee.class);
     }
 
 }
